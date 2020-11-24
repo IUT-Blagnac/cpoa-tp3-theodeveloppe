@@ -41,28 +41,8 @@
                     <target>1.8</target>
                 </configuration>
             </plugin>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>exec-maven-plugin</artifactId>
-                <version>3.0.0</version>
-                <executions>
-                    <execution>
-                        <id>fix0</id>
-                        <phase>install</phase>
-                        <goals>
-                        <goal>exec</goal>
-                        </goals>
-                        <configuration>
-                        <executable>ruby</executable>
-                        <workingDirectory>tests</workingDirectory>
-                        <arguments>
-                            <argument>testfix0.rb</argument>
-                            <argument>../README.adoc</argument>
-                        </arguments>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
+
+
         </plugins>
     </build>
 </project>
