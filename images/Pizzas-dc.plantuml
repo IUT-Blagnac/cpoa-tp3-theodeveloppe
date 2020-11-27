@@ -1,36 +1,147 @@
 @startuml
 
-'-----------------------------------
-' UML concepts illustrated
-' JMB 2014
-'-----------------------------------
+title __JAVA's Class Diagram__\n
 
-!include config.cfg
+    abstract class Pizza {
+        # crust : String
+        # garnitures : ArrayList<String>
+        # name : String
+        # sauce : String
+        + ajoutGarn()
+        + cuire()
+        + emballer()
+        + getNom()
+        + preparer()
+        {abstract} ~ couper()
+    }
 
-abstract class Pizza {
-  ~String nom
-  ~String pate
-  ~String sauce
-  ~ArrayList garnitures
-  ~void preparer()
-  ~void cuire()
-  ~void couper()
-  ~void emballer()
-  +String getNom()
-}
 
-class PizzaFromageStyleBrest {
-  +PizzaFromageStyleBrest()
-}
-Pizza <|-- PizzaFromageStyleBrest
 
-class PizzaFromageStyleStrasbourg {
-  +PizzaFromageStyleStrasbourg()
-}
-Pizza <|-- PizzaFromageStyleStrasbourg
+    abstract class PizzaFactory {
+        {abstract} ~ creerPizza()
+    }
 
-class PizzaFromageStyleCorse as "..." {
-}
-Pizza <|-- PizzaFromageStyleCorse
+
+
+
+    class PizzaFactoryBrest {
+        {static} - instance : PizzaFactoryBrest
+        + creerPizza()
+        {static} + getInstance()
+        - PizzaFactoryBrest()
+    }
+
+
+
+
+    class PizzaFactoryStrasbourg {
+        {static} - instance : PizzaFactoryStrasbourg
+        + creerPizza()
+        {static} + getInstance()
+        - PizzaFactoryStrasbourg()
+    }
+
+
+
+
+    class PizzaFromageStyleBrest {
+        + PizzaFromageStyleBrest()
+        ~ couper()
+    }
+
+
+
+
+    class PizzaFromageStyleStrasbourg {
+        + PizzaFromageStyleStrasbourg()
+        ~ couper()
+    }
+
+
+
+
+    class PizzaGrecqueStyleBrest {
+        + PizzaGrecqueStyleBrest()
+        ~ couper()
+    }
+
+
+
+
+    class PizzaGrecqueStyleStrasbourg {
+        + PizzaGrecqueStyleStrasbourg()
+        ~ couper()
+    }
+
+
+
+
+    class PizzaPoivronsStyleBrest {
+        + PizzaPoivronsStyleBrest()
+        ~ couper()
+    }
+
+
+
+
+    class PizzaPoivronsStyleStrasbourg {
+        + PizzaPoivronsStyleStrasbourg()
+        ~ couper()
+    }
+
+
+
+    class PizzaTestDrive {
+        {static} + main()
+    }
+
+
+
+
+    abstract class Pizzeria {
+        + Pizzeria()
+        + commanderPizza()
+    }
+
+
+
+
+    class PizzeriaBrest {
+        + PizzeriaBrest()
+    }
+
+
+
+
+    class PizzeriaFactory {
+        {static} - instance : PizzeriaFactory
+        + creer()
+        {static} + getInstance()
+        - PizzeriaFactory()
+    }
+
+
+
+
+    class PizzeriaStrasbourg {
+        + PizzeriaStrasbourg()
+    }
+
+
+
+  PizzaFactoryBrest --|> PizzaFactory
+  PizzaFactoryStrasbourg --|> PizzaFactory
+  PizzaFromageStyleBrest --|> Pizza
+  PizzaFromageStyleStrasbourg --|> Pizza
+  PizzaGrecqueStyleBrest --|> Pizza
+  PizzaGrecqueStyleStrasbourg --|> Pizza
+  PizzaPoivronsStyleBrest --|> Pizza
+  PizzaPoivronsStyleStrasbourg --|> Pizza
+  Pizzeria o-- PizzaFactory : fabrique
+  PizzeriaBrest --|> Pizzeria
+  PizzeriaFactory o-- Pizzeria : pizzeria
+  PizzeriaStrasbourg --|> Pizzeria
+
+
 
 @enduml
