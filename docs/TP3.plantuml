@@ -1,147 +1,112 @@
 @startuml
 
-title __JAVA's Class Diagram__\n
-
-    abstract class Pizza {
-        # crust : String
-        # garnitures : ArrayList<String>
-        # name : String
-        # sauce : String
-        + ajoutGarn()
-        + cuire()
-        + emballer()
-        + getNom()
-        + preparer()
-        {abstract} ~ couper()
-    }
+' definitions
+' - - - - - - - - - - -
 
 
+class PizzaTestDrive [[java:appli.PizzaTestDrive]] {
+	+{static}void main(String[] args)
+}
+abstract class Pizza [[java:pizza.Pizza]] {
+	#String name
+	#String crust
+	#String sauce
+	#ArrayList<String> garnitures
+	+void prepare()
+	+void bake()
+	+void cut()
+	+void wrap()
+	+String getName()
+}
 
-    abstract class PizzaFactory {
-        {abstract} ~ creerPizza()
-    }
+abstract class PizzaFactory [[java:pizza.factory.PizzaFactory]] {
+	+{abstract}Pizza create(String name)
+}
 
+class PizzaFactoryStrasbourg [[java:pizza.factory.impl.PizzaFactoryStrasbourg]] {
+	~{static}PizzaFactoryStrasbourg uniqueInstance;
 
+	-PizzaFactoryStrasbourg()
+	+{static}PizzaFactoryStrasbourg getInstance()
+	+Pizza create(String name)
+}
 
+class PizzaFactory [[java:pizza.factory.PizzaFactory]] {
+}
+PizzaFactory <|-- PizzaFactoryStrasbourg
 
-    class PizzaFactoryBrest {
-        {static} - instance : PizzaFactoryBrest
-        + creerPizza()
-        {static} + getInstance()
-        - PizzaFactoryBrest()
-    }
+class PizzaFactoryBrest [[java:pizza.factory.impl.PizzaFactoryBrest]] {
 
+	~{static}PizzaFactoryBrest uniqueInstance;
 
+	-PizzaFactoryBrest()
+	+{static}PizzaFactoryBrest getInstance()
+	+Pizza create(String name)
+}
+class PizzaFactory [[java:pizza.factory.PizzaFactory]] {
+}
+PizzaFactory <|-- PizzaFactoryBrest
+class PizzaGrecqueStyleStrasbourg [[java:pizza.impl.PizzaGrecqueStyleStrasbourg]] {
+}
+abstract class Pizza [[java:pizza.Pizza]] {
+}
+Pizza <|-- PizzaGrecqueStyleStrasbourg
+class PizzaGrecqueStyleBrest [[java:pizza.impl.PizzaGrecqueStyleBrest]] {
+}
 
+Pizza <|-- PizzaGrecqueStyleBrest
+class PizzaPoivronStyleStrasbourg [[java:pizza.impl.PizzaPoivronStyleStrasbourg]] {
+	+PizzaPoivronStyleStrasbourg()
+}
 
-    class PizzaFactoryStrasbourg {
-        {static} - instance : PizzaFactoryStrasbourg
-        + creerPizza()
-        {static} + getInstance()
-        - PizzaFactoryStrasbourg()
-    }
+Pizza <|-- PizzaPoivronStyleStrasbourg
+class PizzaPoivronStyleBrest [[java:pizza.impl.PizzaPoivronStyleBrest]] {
+}
 
-
-
-
-    class PizzaFromageStyleBrest {
-        + PizzaFromageStyleBrest()
-        ~ couper()
-    }
-
-
-
-
-    class PizzaFromageStyleStrasbourg {
-        + PizzaFromageStyleStrasbourg()
-        ~ couper()
-    }
-
-
-
-
-    class PizzaGrecqueStyleBrest {
-        + PizzaGrecqueStyleBrest()
-        ~ couper()
-    }
-
-
-
-
-    class PizzaGrecqueStyleStrasbourg {
-        + PizzaGrecqueStyleStrasbourg()
-        ~ couper()
-    }
-
-
-
-
-    class PizzaPoivronsStyleBrest {
-        + PizzaPoivronsStyleBrest()
-        ~ couper()
-    }
-
-
-
-
-    class PizzaPoivronsStyleStrasbourg {
-        + PizzaPoivronsStyleStrasbourg()
-        ~ couper()
-    }
+Pizza <|-- PizzaPoivronStyleBrest
+class PizzaCheeseStyleBrest [[java:pizza.impl.PizzaCheeseStyleBrest]] {
+	+PizzaCheeseStyleBrest()
+}
+Pizza <|-- PizzaCheeseStyleBrest
+class PizzaCheeseStyleStrasbourg [[java:pizza.impl.PizzaCheeseStyleStrasbourg]] {
+	+PizzaCheeseStyleStrasbourg()
+	+void cut()
+}
 
 
+Pizza <|-- PizzaCheeseStyleStrasbourg
+abstract class Pizzeria [[java:pizzeria.Pizzeria]] {
+	+Pizza orderPizza(String type)
+	+Pizzeria(PizzaFactory pizzaFactory)
+	#Pizza createPizza(String type)
+}
+abstract class PizzaFactory [[java:pizza.factory.PizzaFactory]] {
+}
+Pizzeria --> "1" PizzaFactory : pizzaFactory
+class PizzeriaFactory [[java:pizzeria.factory.PizzeriaFactory]] {
+	~{static}PizzeriaFactory uniqueInstance
+	-PizzeriaFactory()
+	+{static}PizzeriaFactory getInstance()
+	+Pizzeria create(String name)
+}
+class PizzeriaBrest [[java:pizzeria.impl.PizzeriaBrest]] {
+	+PizzeriaBrest()
+}
+class Pizzeria [[java:pizzeria.Pizzeria]] {
+}
+Pizzeria <|-- PizzeriaBrest
+class PizzeriaStrasbourg [[java:pizzeria.impl.PizzeriaStrasbourg]] {
+	+PizzeriaStrasbourg()
+}
+abstract class Pizzeria [[java:pizzeria.Pizzeria]] {
+}
+Pizzeria <|-- PizzeriaStrasbourg
 
-    class PizzaTestDrive {
-        {static} + main()
-    }
-
-
-
-
-    abstract class Pizzeria {
-        + Pizzeria()
-        + commanderPizza()
-    }
-
-
-
-
-    class PizzeriaBrest {
-        + PizzeriaBrest()
-    }
-
-
-
-
-    class PizzeriaFactory {
-        {static} - instance : PizzeriaFactory
-        + creer()
-        {static} + getInstance()
-        - PizzeriaFactory()
-    }
-
-
-
-
-    class PizzeriaStrasbourg {
-        + PizzeriaStrasbourg()
-    }
-
-
-
-  PizzaFactoryBrest --|> PizzaFactory
-  PizzaFactoryStrasbourg --|> PizzaFactory
-  PizzaFromageStyleBrest --|> Pizza
-  PizzaFromageStyleStrasbourg --|> Pizza
-  PizzaGrecqueStyleBrest --|> Pizza
-  PizzaGrecqueStyleStrasbourg --|> Pizza
-  PizzaPoivronsStyleBrest --|> Pizza
-  PizzaPoivronsStyleStrasbourg --|> Pizza
-  Pizzeria o-- PizzaFactory : fabrique
-  PizzeriaBrest --|> Pizzeria
-  PizzeriaFactory o-- Pizzeria : pizzeria
-  PizzeriaStrasbourg --|> Pizzeria
-
-
+ 'Dependencies added manually
+ PizzaTestDrive ..> PizzeriaFactory
+ PizzaTestDrive ..> Pizza
+ PizzeriaFactory ..> Pizzeria
+ PizzaFactory ..> Pizza
+ Pizzeria ..> Pizza
 
 @enduml
