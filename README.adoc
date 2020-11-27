@@ -89,7 +89,7 @@ endif::[]
 
 {lastName}:: DILLENSEGER
 
-{firstName}:: Théo
+{firstName}:: Theo
 
 {group} #::
 
