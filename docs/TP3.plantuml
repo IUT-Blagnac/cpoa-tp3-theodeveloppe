@@ -1,7 +1,6 @@
 @startuml
 
-' definitions
-' - - - - - - - - - - -
+
 
 
 class PizzaTestDrive [[java:appli.PizzaTestDrive]] {
@@ -102,7 +101,7 @@ abstract class Pizzeria [[java:pizzeria.Pizzeria]] {
 }
 Pizzeria <|-- PizzeriaStrasbourg
 
- 'Dependencies added manually
+
  PizzaTestDrive ..> PizzeriaFactory
  PizzaTestDrive ..> Pizza
  PizzeriaFactory ..> Pizzeria
